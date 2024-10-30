@@ -33,5 +33,33 @@ SELECT users.username FROM photos
 RIGHT JOIN users ON users.id = photos.user_id
 WHERE photos.created_at IS NULL;
 
+-- 4. We're running a new contest to see who can get the most likes on a single photo. 
+SELECT username, photos.id, photos.image_url, COUNT(*) AS Like_count FROM likes
+JOIN photos ON photo_id = photos.id
+INNER JOIN users ON photos.user_id = users.id
+GROUP BY likes.photo_id
+ORDER BY Like_count DESC
+LIMIT 1; 
+
+-- 5. Our investors want to know.. How many times does average users post?
+SELECT
+(SELECT COUNT(*) FROM photos) /
+(SELECT COUNT(*) FROM users) AS Avg_Post_Per_User;
+
+-- 6. A brand wants to know which hashtags to use in a post. 
+--    What are the top 5 most commonly used hashtags
+SELECT tags.tag_name, count(*) AS total_ FROM tags
+JOIN photo_tags ON photo_tags.tag_id = tags.id
+GROUP BY tags.id
+ORDER BY total_ DESC
+LIMIT 5;
+
+-- 7. We have a small problem with bots on our site...
+--    Finds users who have liked every single photo on the site
+
+SELECT users.username, count(*) AS like_count FROM likes
+JOIN users on users.id = likes.user_id
+GROUP BY likes.user_id
+HAVING like_count = (SELECT COUNT(*) FROM photos); 
  
 
