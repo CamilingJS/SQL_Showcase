@@ -67,3 +67,26 @@ INSERT INTO likes(user_id, photo_id) VALUES
 (1,3),
 (3,3);
 
+
+-- Relationship tables
+CREATE TABLE follow (
+    follower_id INTEGER NOT NULL,
+    followee_id INTEGER NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW(),
+    FOREIGN KEY (follower_id) REFERENCES users(id),
+    FOREIGN KEY (followee_id) REFERENCES users(id),
+    PRIMARY KEY (follower_id, followee_id)
+);
+
+RENAME TABLE follow TO follows; 
+
+INSERT INTO follows (follower_id, followee_id) VALUES
+(1,2),
+(1,3),
+(3,1),
+(2,3);
+
+SELECT * FROM follows;
+
+INSERT INTO FOLLOWS (followee_id, followee_id) VALUES
+(2,1);
