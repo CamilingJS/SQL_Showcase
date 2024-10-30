@@ -27,5 +27,11 @@ GROUP BY day
 ORDER BY total DESC
 LIMIT 2;
 
--- 3. We want to target our inactive us
+-- 3. We want to target our inactive users with an email campaign. 
+--    Find the users who have never posted a photo
+SELECT users.username FROM photos
+RIGHT JOIN users ON users.id = photos.user_id
+WHERE photos.created_at IS NULL;
+
+ 
 
