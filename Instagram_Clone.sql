@@ -90,3 +90,34 @@ SELECT * FROM follows;
 
 INSERT INTO FOLLOWS (followee_id, followee_id) VALUES
 (2,1);
+
+CREATE TABLE tags(
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
+    tag_name VARCHAR(255) UNIQUE,
+    created_at TIMESTAMP DEFAULT NOW()
+)
+
+CREATE TABLE photo_tags(
+    photo_id INTEGER NOT NULL,
+    tag_id INTEGER NOT NULL,
+    FOREIGN KEY(photo_id) REFERENCES photos(id),
+    FOREIGN KEY(tag_id) REFERENCES tags(id),
+    PRIMARY KEY(photo_id, tag_id)
+);
+
+INSERT INTO tags(tag_name) VALUES
+('adorable'),
+('cute'),
+('sunrise');
+
+SELECT * FROM tags;
+
+INSERT INTO photo_tags(photo_id, tag_id) VALUES
+(1,1),
+(1,2),
+(2,3),
+(3,2);
+
+SELECT * FROM photo_tags;
+
+
